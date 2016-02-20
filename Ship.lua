@@ -33,9 +33,11 @@ function Ship:init(args)
 
     self.game.updateHandlers.input[self] = Ship.updateInput
     self.game.updateHandlers.control[self] = Ship.updateControl
+    self.game.updateHandlers.animation[self] = Ship.updateAnimation
 end
 
 function Ship:destroy()
+    self.game.updateHandlers.animation[self] = nil
     self.game.updateHandlers.control[self] = nil
     self.game.updateHandlers.input[self] = nil
 
@@ -61,6 +63,11 @@ function Ship:updateControl(dt)
         local turnInput = rightInput - leftInput
         self.turnJoint:setMotorSpeed(turnInput * self.turnSpeed)
     end
+end
+
+function Ship:updateAnimation(dt)
+    local camera = self.game.entitiesByName.camera
+    camera.x, camera.y = self.wall.body:getWorldCenter()
 end
 
 function Ship:updateTurnJoint()

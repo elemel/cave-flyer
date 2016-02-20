@@ -11,12 +11,13 @@ function love.load()
         -- fullscreen = true,
         fullscreentype = "desktop",
         resizable = true,
+        msaa = 16,
     })
 
     love.physics.setMeter(1)
 
     game = Game.new({
-        updatePhases = {"input", "control", "physics", "collision"},
+        updatePhases = {"input", "control", "physics", "collision", "animation"},
         drawPhases = {"camera", "debug"},
     })
 
