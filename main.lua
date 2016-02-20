@@ -55,7 +55,7 @@ function love.load()
     })
 
     ship.wall:setBlock(0, 0, "metal")
-    ship.wall:setBlock(1, 0, "metal")
+    ship.wall:setBlock(-1, 0, "metal")
     ship.wall:setBlock(0, 1, "metal")
     ship.wall:updateBlockFixtures()
     ship:updateTurnJoint()

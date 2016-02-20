@@ -28,7 +28,7 @@ function Ship:init(args)
         game = self.game,
         body = self.wall.body,
         acceleration = self.thrustAcceleration,
-        angle = math.atan2(-1, -1),
+        angle = math.atan2(-1, 1),
     })
 
     self.game.updateHandlers.input[self] = Ship.updateInput
