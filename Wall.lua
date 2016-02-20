@@ -20,7 +20,8 @@ function Wall:init(args)
 
     self.originX, self.originY = args.originX or 0, args.originY or 0
 
-    local world = self.game.entitiesByName.physics.world
+    local physics = next(self.game.registry.physics)
+    local world = physics.world
     local x, y = args.x or 0, args.y or 0
     local bodyType = args.bodyType or "static"
     self.body = love.physics.newBody(world, x, y, bodyType)

@@ -9,18 +9,17 @@ end
 
 function Camera:init(args)
     self.game = args.game
-    self.name = args.name
-    self.categories = args.categories
+    self.categories = args.categories or {"camera"}
 
     self.x, self.y = args.x or 0, args.y or 0
     self.scale = args.scale or 1
 
     self.game.drawHandlers.camera[self] = Camera.draw
-    self.game:register(self, self.name, self.categories)
+    self.game:register(self, self.categories)
 end
 
 function Camera:destroy()
-    self.game:deregister(self, self.name, self.categories)
+    self.game:deregister(self, self.categories)
     self.game.drawHandlers.camera[self] = nil
 end
 

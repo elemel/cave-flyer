@@ -19,23 +19,20 @@ function love.load()
     game = Game.new({
         updatePhases = {"input", "control", "physics", "collision", "animation"},
         drawPhases = {"camera", "debug"},
+        categories = {"camera", "physics", "terrain"},
     })
 
     Camera.new({
         game = game,
-        name = "camera",
         scale = 0.02,
     })
 
     Physics.new({
         game = game,
-        name = "physics",
-        -- gravityY = 5,
     })
 
     local terrain = Terrain.new({
         game = game,
-        name = "terrain",
     })
 
     local z = 1000 * love.math.random()

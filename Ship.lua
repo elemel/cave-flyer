@@ -66,7 +66,7 @@ function Ship:updateControl(dt)
 end
 
 function Ship:updateAnimation(dt)
-    local camera = self.game.entitiesByName.camera
+    local camera = next(self.game.registry.camera)
     camera.x, camera.y = self.wall.body:getWorldCenter()
 end
 
@@ -79,10 +79,10 @@ function Ship:updateTurnJoint()
         self.turnBody:destroy()
     end
 
-    local world = self.game.entitiesByName.physics.world
+    local physics = next(self.game.registry.physics)
     local x, y, mass, inertia = self.wall.body:getMassData()
 
-    self.turnBody = love.physics.newBody(world, x, y, "dynamic")
+    self.turnBody = love.physics.newBody(physics.world, x, y, "dynamic")
     self.turnBody:setFixedRotation(true)
 
     self.turnJoint = love.physics.newRevoluteJoint(self.turnBody, self.wall.body, x, y)

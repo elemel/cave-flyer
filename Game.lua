@@ -11,11 +11,10 @@ function Game:init(args)
     -- Initialize registry
 
     self.categories = args.categories or {}
-    self.entitiesByName = {}
-    self.entitiesByCategory = {}
+    self.registry = {}
 
     for i, category in ipairs(self.categories) do
-        self.entitiesByCategory[category] = {}
+        self.registry[category] = {}
     end
 
     -- Initialize update phases
@@ -37,31 +36,15 @@ function Game:init(args)
     end
 end
 
-function Game:register(entity, name, categories)
-    -- Register name
-    if name then
-        self.entitiesByName[name] = entity
-    end
-
-    -- Register categories
-    if categories then
-        for i, category in ipairs(categories) do
-            self.entitiesByCategory[category][entity] = true
-        end
+function Game:register(entity, categories)
+    for i, category in ipairs(categories) do
+        self.registry[category][entity] = true
     end
 end
 
-function Game:deregister(entity, name, categories)
-    -- Deregister categories
-    if categories then
-        for i, category in ipairs(categories) do
-            self.entitiesByCategory[category][entity] = nil
-        end
-    end
-
-    -- Deregister name
-    if name then
-        self.entitiesByName[name] = nil
+function Game:deregister(entity, categories)
+    for i, category in ipairs(categories) do
+        self.registry[category][entity] = nil
     end
 end
 
