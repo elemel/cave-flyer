@@ -43,7 +43,7 @@ function Ship:init(args)
         game = self.game,
         body = self.wall.body,
         angle = math.atan2(-1, 1),
-        speed = 16,
+        speed = 32,
         delay = 1 / 4,
         groupIndex = self.groupIndex,
     })
