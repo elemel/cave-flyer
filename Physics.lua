@@ -9,7 +9,7 @@ end
 
 function Physics:init(args)
     self.game = args.game
-    self.categories = args.categories or {"physics"}
+    self.tags = args.tags or {"physics"}
 
     local gravityX, gravityY = args.gravityX or 0, args.gravityY or 0
     self.world = love.physics.newWorld(gravityX, gravityY, true)
@@ -17,11 +17,11 @@ function Physics:init(args)
 
     self.game.updateHandlers.physics[self] = Physics.update
     self.game.drawHandlers.debug[self] = Physics.debugDraw
-    self.game:register(self, self.categories)
+    self.game:register(self, self.tags)
 end
 
 function Physics:destroy()
-    self.game:deregister(self, self.categories)
+    self.game:deregister(self, self.tags)
     self.game.drawHandlers.debug[self] = nil
     self.game.updateHandlers.physics[self] = nil
     self.world:destroy()

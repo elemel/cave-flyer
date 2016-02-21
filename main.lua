@@ -20,7 +20,7 @@ function love.load()
     game = Game.new({
         updatePhases = {"input", "control", "physics", "collision", "animation"},
         drawPhases = {"camera", "debug"},
-        categories = {"camera", "physics", "terrain"},
+        tags = {"camera", "physics", "terrain"},
     })
 
     Camera.new({

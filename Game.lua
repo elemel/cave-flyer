@@ -10,11 +10,11 @@ end
 function Game:init(args)
     -- Initialize registry
 
-    self.categories = args.categories or {}
+    self.tags = args.tags or {}
     self.registry = {}
 
-    for i, category in ipairs(self.categories) do
-        self.registry[category] = {}
+    for i, tag in ipairs(self.tags) do
+        self.registry[tag] = {}
     end
 
     -- Initialize update phases
@@ -36,15 +36,15 @@ function Game:init(args)
     end
 end
 
-function Game:register(entity, categories)
-    for i, category in ipairs(categories) do
-        self.registry[category][entity] = true
+function Game:register(entity, tags)
+    for i, tag in ipairs(tags) do
+        self.registry[tag][entity] = true
     end
 end
 
-function Game:deregister(entity, categories)
-    for i, category in ipairs(categories) do
-        self.registry[category][entity] = nil
+function Game:deregister(entity, tags)
+    for i, tag in ipairs(tags) do
+        self.registry[tag][entity] = nil
     end
 end
 

@@ -11,17 +11,17 @@ end
 
 function Terrain:init(args)
     self.game = args.game
-    self.categories = args.categories or {"terrain"}
+    self.tags = args.tags or {"terrain"}
 
     self.wall = Wall.new({
         game = self.game,
     })
 
-    self.game:register(self, self.categories)
+    self.game:register(self, self.tags)
 end
 
 function Terrain:destroy()
-    self.game:deregister(self, self.categories)
+    self.game:deregister(self, self.tags)
     self.wall:destroy()
 end
 
