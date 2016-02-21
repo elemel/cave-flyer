@@ -1,4 +1,5 @@
 local Camera = require "Camera"
+local common = require "common"
 local Game = require "Game"
 local Physics = require "Physics"
 local Ship = require "Ship"
@@ -40,7 +41,7 @@ function love.load()
 
     for x = -20, 20 do
         for y = -20, 20 do
-            local density = love.math.noise(terrainFrequency * x, terrainFrequency * y, z)
+            local density = common.fbm3(terrainFrequency * x, terrainFrequency * y, z)
 
             if density > 0.5 then
                 terrain.wall:setBlock(x, y, "stone")
