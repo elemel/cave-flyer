@@ -1,3 +1,4 @@
+local Gun = require "Gun"
 local Thruster = require "Thruster"
 local Turner = require "Turner"
 local Wall = require "Wall"
@@ -13,6 +14,7 @@ end
 
 function Ship:init(args)
     self.game = args.game
+    self.groupIndex = args.groupIndex or 0
 
     local x, y = args.x or 0, args.y or 0
 
@@ -20,6 +22,7 @@ function Ship:init(args)
         game = self.game,
         x = x, y = y,
         bodyType = "dynamic",
+        groupIndex = self.groupIndex,
     })
 
     self.turner = Turner.new({
@@ -36,6 +39,15 @@ function Ship:init(args)
         angle = math.atan2(-1, 1),
     })
 
+    self.gun = Gun.new({
+        game = self.game,
+        body = self.wall.body,
+        angle = math.atan2(-1, 1),
+        speed = 16,
+        delay = 1 / 4,
+        groupIndex = self.groupIndex,
+    })
+
     self.game.updateHandlers.input[self] = Ship.updateInput
     self.game.updateHandlers.animation[self] = Ship.updateAnimation
 end
@@ -50,11 +62,12 @@ function Ship:destroy()
 end
 
 function Ship:updateInput(dt)
-    local leftInput = love.keyboard.isDown("left") and 1 or 0
-    local rightInput = love.keyboard.isDown("right") and 1 or 0
+    local leftInput = love.keyboard.isDown("a") and 1 or 0
+    local rightInput = love.keyboard.isDown("d") and 1 or 0
     self.turner.input = rightInput - leftInput
 
-    self.thruster.input = love.keyboard.isDown("up") and 1 or 0
+    self.thruster.input = love.keyboard.isDown("w") and 1 or 0
+    self.gun.input = love.keyboard.isDown("j") and 1 or 0
 end
 
 function Ship:updateAnimation(dt)

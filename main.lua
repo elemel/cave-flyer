@@ -53,6 +53,7 @@ function love.load()
 
     local ship = Ship.new({
         game = game,
+        groupIndex = -1,
     })
 
     ship.wall:setBlock(0, 0, "metal")

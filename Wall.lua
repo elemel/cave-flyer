@@ -14,6 +14,7 @@ function Wall:init(args)
     self.blocks = {}
     self.blockFixtures = {}
     self.dirtyBlockFixtures = {}
+    self.groupIndex = args.groupIndex or 0
 
     self.blockWidth = args.blockWidth or 1
     self.blockHeight = args.blockHeight or 1
@@ -71,6 +72,7 @@ function Wall:updateBlockFixture(x, y)
             self.blockWidth, self.blockHeight)
 
         fixture = love.physics.newFixture(self.body, shape, 1)
+        fixture:setGroupIndex(self.groupIndex)
     end
 
     common.set2(self.blockFixtures, x, y, fixture)
