@@ -78,6 +78,7 @@ function Wall:updateBlockFixture(x, y)
         fixture = love.physics.newFixture(self.body, shape, 1)
         fixture:setGroupIndex(self.groupIndex)
         fixture:setCategory(self.categoryIndex)
+        fixture:setUserData({x = x, y = y})
     end
 
     common.set2(self.blockFixtures, x, y, fixture)

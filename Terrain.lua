@@ -18,6 +18,7 @@ function Terrain:init(args)
         category = "terrain",
     })
 
+    self.wall.body:setUserData({terrain = self})
     self.game:register(self, self.tags)
 end
 

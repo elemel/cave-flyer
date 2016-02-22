@@ -1,3 +1,5 @@
+local common = require "common"
+
 local Physics = {}
 Physics.__index = Physics
 
@@ -30,7 +32,15 @@ function Physics:destroy()
     self.game:deregister(self, self.tags)
     self.game.drawHandlers.debug[self] = nil
     self.game.updateHandlers.physics[self] = nil
+
     self.world:destroy()
+end
+
+function Physics:setCollider(category1, category2, collider)
+    local index1 = assert(self.categoryIndices[category1])
+    local index2 = assert(self.categoryIndices[category2])
+
+    common.set2(self.colliders, index1, index2, collider)
 end
 
 function Physics:update(dt)

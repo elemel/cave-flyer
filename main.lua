@@ -1,4 +1,5 @@
 local Camera = require "Camera"
+local Collider = require "Collider"
 local common = require "common"
 local Game = require "Game"
 local Physics = require "Physics"
@@ -28,9 +29,14 @@ function love.load()
         scale = 0.02,
     })
 
-    Physics.new({
+    local physics = Physics.new({
         game = game,
         categories = {"unknown", "bullet", "ship", "terrain"},
+    })
+
+    local collider = Collider.new({
+        game = game,
+        physics = physics,
     })
 
     local terrain = Terrain.new({

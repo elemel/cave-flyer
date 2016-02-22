@@ -8,6 +8,7 @@ function Bullet.new(args)
 end
 
 function Bullet:init(args)
+	self.destroyed = false
 	self.game = args.game
 	self.groupIndex = args.groupIndex or 0
 
@@ -22,6 +23,10 @@ function Bullet:init(args)
 	self.body:setLinearVelocity(linearVelocityX, linearVelocityY)
 	self.body:setAngularVelocity(args.angularVelocity or 0)
 
+	self.body:setUserData({
+		bullet = self,
+	})
+
 	local width, height = args.width or 1, args.height or 1
 	local shape = love.physics.newRectangleShape(width, height)
 	local density = args.density or 1
@@ -31,7 +36,13 @@ function Bullet:init(args)
 end
 
 function Bullet:destroy()
+	self.fixture:destroy()
+	self.fixture = nil
+
 	self.body:destroy()
+	self.body = nil
+
+	self.destroyed = true
 end
 
 return Bullet
