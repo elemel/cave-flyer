@@ -23,6 +23,10 @@ function Wall:init(args)
 
     local physics = next(self.game.registry.physics)
     local world = physics.world
+
+    local category = args.category or "unknown"
+    self.categoryIndex = assert(physics.categoryIndices[category])
+
     local x, y = args.x or 0, args.y or 0
     local bodyType = args.bodyType or "static"
     self.body = love.physics.newBody(world, x, y, bodyType)
@@ -73,6 +77,7 @@ function Wall:updateBlockFixture(x, y)
 
         fixture = love.physics.newFixture(self.body, shape, 1)
         fixture:setGroupIndex(self.groupIndex)
+        fixture:setCategory(self.categoryIndex)
     end
 
     common.set2(self.blockFixtures, x, y, fixture)

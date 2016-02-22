@@ -15,6 +15,7 @@ function Terrain:init(args)
 
     self.wall = Wall.new({
         game = self.game,
+        category = "terrain",
     })
 
     self.game:register(self, self.tags)

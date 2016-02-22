@@ -10,6 +10,12 @@ end
 function Physics:init(args)
     self.game = args.game
     self.tags = args.tags or {"physics"}
+    self.categories = args.categories or {}
+    self.categoryIndices = {}
+
+    for i, category in ipairs(self.categories) do
+        self.categoryIndices[category] = i
+    end
 
     local gravityX, gravityY = args.gravityX or 0, args.gravityY or 0
     self.world = love.physics.newWorld(gravityX, gravityY, true)

@@ -27,6 +27,7 @@ function Bullet:init(args)
 	local density = args.density or 1
 	self.fixture = love.physics.newFixture(self.body, shape, density)
 	self.fixture:setGroupIndex(self.groupIndex)
+	self.fixture:setCategory(physics.categoryIndices.bullet)
 end
 
 function Bullet:destroy()

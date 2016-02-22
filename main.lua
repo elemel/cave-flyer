@@ -30,6 +30,7 @@ function love.load()
 
     Physics.new({
         game = game,
+        categories = {"unknown", "bullet", "ship", "terrain"},
     })
 
     local terrain = Terrain.new({

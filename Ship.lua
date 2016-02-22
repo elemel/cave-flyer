@@ -23,6 +23,7 @@ function Ship:init(args)
         x = x, y = y,
         bodyType = "dynamic",
         groupIndex = self.groupIndex,
+        category = "ship",
     })
 
     self.turner = Turner.new({
