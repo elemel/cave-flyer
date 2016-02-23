@@ -27,7 +27,7 @@ function love.load()
 
     local camera = Camera.new({
         game = game,
-        scale = 0.02,
+        scale = 1 / 8,
     })
 
     local physics = Physics.new({
@@ -78,7 +78,7 @@ function love.load()
 
     local enemyShip = Ship.new({
         game = game,
-        x = 5, y = 5,
+        x = 1, y = 1,
         groupIndex = -physics:generateGroupIndex(),
     })
 

@@ -12,7 +12,6 @@ function Thruster:init(args)
     self.ship = assert(args.ship)
     self.body = assert(args.body)
     self.acceleration = args.acceleration or 0
-    self.input = args.input or 0
     self.localAngle = (args.angle or 0) - self.body:getAngle()
 
     self.game.updateHandlers.control[self] = Thruster.updateControl

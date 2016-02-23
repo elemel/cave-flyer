@@ -47,7 +47,7 @@ function Ship:init(args)
         game = self.game,
         ship = self,
         body = self.wall.body,
-        acceleration = args.thrustAcceleration or 20,
+        acceleration = args.thrustAcceleration or 4,
         angle = math.atan2(-1, 1),
     })
 
@@ -56,7 +56,7 @@ function Ship:init(args)
         ship = self,
         body = self.wall.body,
         angle = math.atan2(-1, 1),
-        speed = 32,
+        speed = 4,
         delay = 1 / 4,
         groupIndex = self.groupIndex,
     })

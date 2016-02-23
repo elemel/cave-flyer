@@ -27,7 +27,7 @@ function Bullet:init(args)
 		bullet = self,
 	})
 
-	local width, height = args.width or 1, args.height or 1
+	local width, height = args.width or 1 / 8, args.height or 1 / 8
 	local shape = love.physics.newRectangleShape(width, height)
 	local density = args.density or 1
 	self.fixture = love.physics.newFixture(self.body, shape, density)

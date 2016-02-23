@@ -13,7 +13,7 @@ function Turner:init(args)
     self.body = assert(args.body)
     self.acceleration = args.acceleration or 1
     self.speed = args.speed or 1
-    self.input = args.input or 0
+    self.mass = args.mass or 1 / 64
 
     self.game.updateHandlers.control[self] = Turner.updateControl
 end
@@ -51,6 +51,7 @@ function Turner:updateJoint()
 
     self.fixedBody = love.physics.newBody(physics.world, x, y, "dynamic")
     self.fixedBody:setFixedRotation(true)
+    self.fixedBody:setMass(self.mass)
 
     self.joint = love.physics.newRevoluteJoint(self.fixedBody, self.body, x, y)
     self.joint:setMotorEnabled(true)

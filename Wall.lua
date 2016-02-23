@@ -16,8 +16,8 @@ function Wall:init(args)
     self.dirtyBlockFixtures = {}
     self.groupIndex = args.groupIndex or 0
 
-    self.blockWidth = args.blockWidth or 1
-    self.blockHeight = args.blockHeight or 1
+    self.blockWidth = args.blockWidth or 1 / 8
+    self.blockHeight = args.blockHeight or 1 / 8
 
     self.originX, self.originY = args.originX or 0, args.originY or 0
 
