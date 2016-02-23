@@ -1,3 +1,4 @@
+local Ai = require "Ai"
 local Camera = require "Camera"
 local Collider = require "Collider"
 local common = require "common"
@@ -87,6 +88,11 @@ function love.load()
     enemyShip.wall:setBlock(0, 1, "metal")
     enemyShip.wall:updateBlockFixtures()
     enemyShip.turner:updateJoint()
+
+    Ai.new({
+        game = game,
+        ship = enemyShip,
+    })
 end
 
 function love.update(dt)

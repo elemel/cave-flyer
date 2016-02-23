@@ -31,7 +31,9 @@ function Player:updateInput(dt)
 end
 
 function Player:updateAnimation(dt)
-    self.camera.x, self.camera.y = self.ship.wall.body:getWorldCenter()
+	if not self.ship.destroyed then
+	    self.camera.x, self.camera.y = self.ship.wall.body:getWorldCenter()
+	end
 end
 
 return Player
