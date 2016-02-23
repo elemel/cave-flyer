@@ -14,6 +14,7 @@ function Physics:init(args)
     self.tags = args.tags or {"physics"}
     self.categories = args.categories or {}
     self.categoryIndices = {}
+    self.nextGroupIndex = 1
 
     for i, category in ipairs(self.categories) do
         self.categoryIndices[category] = i
@@ -36,11 +37,10 @@ function Physics:destroy()
     self.world:destroy()
 end
 
-function Physics:setCollider(category1, category2, collider)
-    local index1 = assert(self.categoryIndices[category1])
-    local index2 = assert(self.categoryIndices[category2])
-
-    common.set2(self.colliders, index1, index2, collider)
+function Physics:generateGroupIndex()
+    local index = self.nextGroupIndex
+    self.nextGroupIndex = self.nextGroupIndex + 1
+    return index
 end
 
 function Physics:update(dt)

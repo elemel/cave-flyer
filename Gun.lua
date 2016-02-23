@@ -11,8 +11,8 @@ end
 
 function Gun:init(args)
     self.game = assert(args.game)
+    self.ship = assert(args.ship)
     self.body = assert(args.body)
-    self.input = args.input or 0
     self.localAngle = (args.angle or 0) - self.body:getAngle()
     self.delay = args.delay or 1
     self.speed = args.speed or 1
@@ -29,7 +29,7 @@ end
 function Gun:updateControl(dt)
     self.currentDelay = self.currentDelay + dt
 
-    if self.input * self.currentDelay > self.delay then
+    if self.ship.inputs.fire * self.currentDelay > self.delay then
         local x, y = self.body:getWorldCenter()
         local linearVelocityX, linearVelocityY =
             self.body:getLinearVelocityFromWorldPoint(x, y)

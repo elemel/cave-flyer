@@ -39,6 +39,14 @@ function Collider:beginContact(fixture1, fixture2, contact)
     if category1 == "terrain" and category2 == "bullet" then
         self:collideBulletAndTerrain(fixture2, fixture1)
     end
+
+    if category1 == "bullet" and category2 == "ship" then
+        self:collideBulletAndShip(fixture1, fixture2)
+    end
+
+    if category1 == "ship" and category2 == "bullet" then
+        self:collideBulletAndShip(fixture2, fixture1)
+    end
 end
 
 function Collider:collideBulletAndTerrain(bulletFixture, terrainFixture)
@@ -56,6 +64,23 @@ function Collider:collideBulletAndTerrain(bulletFixture, terrainFixture)
 
             terrain.wall:setBlock(x, y, nil)
             terrain.wall:updateBlockFixtures()
+        end
+    end
+
+    table.insert(self.tasks, task)
+end
+
+function Collider:collideBulletAndShip(bulletFixture, shipFixture)
+    local bulletBody = bulletFixture:getBody()
+    local shipBody = shipFixture:getBody()
+
+    local bullet = bulletBody:getUserData().bullet
+    local ship = shipBody:getUserData().ship
+
+    local function task()
+        if not bullet.destroyed then
+            bullet:destroy()
+            ship:destroy()
         end
     end
 

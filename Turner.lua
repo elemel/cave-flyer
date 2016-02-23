@@ -9,6 +9,7 @@ end
 
 function Turner:init(args)
     self.game = assert(args.game)
+    self.ship = assert(args.ship)
     self.body = assert(args.body)
     self.acceleration = args.acceleration or 1
     self.speed = args.speed or 1
@@ -31,7 +32,7 @@ end
 
 function Turner:updateControl(dt)
     if self.joint then
-        self.joint:setMotorSpeed(self.input * self.speed)
+        self.joint:setMotorSpeed(self.ship.inputs.turn * self.speed)
     end
 end
 

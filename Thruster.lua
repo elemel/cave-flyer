@@ -9,6 +9,7 @@ end
 
 function Thruster:init(args)
     self.game = assert(args.game)
+    self.ship = assert(args.ship)
     self.body = assert(args.body)
     self.acceleration = args.acceleration or 0
     self.input = args.input or 0
@@ -23,7 +24,7 @@ end
 
 function Thruster:updateControl(dt)
     local x, y, mass, inertia = self.body:getMassData()
-    local force = self.input * mass * self.acceleration
+    local force = self.ship.inputs.thrust * mass * self.acceleration
     local angle = self.localAngle + self.body:getAngle()
     self.body:applyForce(force * math.cos(angle), force * math.sin(angle))
 end

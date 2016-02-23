@@ -3,6 +3,7 @@ local Collider = require "Collider"
 local common = require "common"
 local Game = require "Game"
 local Physics = require "Physics"
+local Player = require "Player"
 local Ship = require "Ship"
 local Terrain = require "Terrain"
 
@@ -24,7 +25,7 @@ function love.load()
         tags = {"camera", "physics", "terrain"},
     })
 
-    Camera.new({
+    local camera = Camera.new({
         game = game,
         scale = 0.02,
     })
@@ -60,7 +61,7 @@ function love.load()
 
     local ship = Ship.new({
         game = game,
-        groupIndex = -1,
+        groupIndex = -physics:generateGroupIndex(),
     })
 
     ship.wall:setBlock(0, 0, "metal")
@@ -68,6 +69,24 @@ function love.load()
     ship.wall:setBlock(0, 1, "metal")
     ship.wall:updateBlockFixtures()
     ship.turner:updateJoint()
+
+    Player.new({
+        game = game,
+        ship = ship,
+        camera = camera,
+    })
+
+    local enemyShip = Ship.new({
+        game = game,
+        x = 5, y = 5,
+        groupIndex = -physics:generateGroupIndex(),
+    })
+
+    enemyShip.wall:setBlock(0, 0, "metal")
+    enemyShip.wall:setBlock(-1, 0, "metal")
+    enemyShip.wall:setBlock(0, 1, "metal")
+    enemyShip.wall:updateBlockFixtures()
+    enemyShip.turner:updateJoint()
 end
 
 function love.update(dt)
