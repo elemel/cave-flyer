@@ -1,3 +1,4 @@
+local Builder = require "Builder"
 local Gun = require "Gun"
 local Thruster = require "Thruster"
 local TractorBeam = require "TractorBeam"
@@ -69,9 +70,17 @@ function Ship:init(args)
         body = self.wall.body,
         groupIndex = self.groupIndex,
     })
+
+    self.builder = Builder.new({
+        game = self.game,
+        ship = self,
+        body = self.wall.body,
+        groupIndex = self.groupIndex,
+    })
 end
 
 function Ship:destroy()
+    self.builder:destroy()
     self.tractorBeam:destroy()
     self.gun:destroy()
     self.thruster:destroy()

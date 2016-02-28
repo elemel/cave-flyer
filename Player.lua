@@ -31,7 +31,7 @@ function Player:updateInput(dt)
 
     self.ship.inputs.targetX, self.ship.inputs.targetY = self.camera:getWorldPoint(love.mouse.getPosition())
     self.ship.inputs.fire2 = love.mouse.isDown(1) and 1 or 0
-    self.ship.inputs.fire3 = love.mouse.isDown(1) and 1 or 0
+    self.ship.inputs.fire3 = love.mouse.isDown(2) and 1 or 0
 end
 
 function Player:updateAnimation(dt)

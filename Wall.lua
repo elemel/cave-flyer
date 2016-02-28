@@ -84,4 +84,13 @@ function Wall:updateBlockFixture(x, y)
     common.set2(self.blockFixtures, x, y, fixture)
 end
 
+function Wall:getIndicesFromWorldPoint(worldX, worldY)
+    local localX, localY = self.body:getLocalPoint(worldX, worldY)
+
+    local x = math.floor((localX - self.originX) / self.blockWidth)
+    local y = math.floor((localY - self.originY) / self.blockHeight)
+
+    return x, y
+end
+
 return Wall
