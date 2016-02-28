@@ -31,6 +31,17 @@ function Camera:draw()
     love.graphics.scale(scale)
     love.graphics.translate(-self.x, -self.y)
     love.graphics.setLineWidth(1 / scale)
+
+    local worldX, worldY = self:getWorldPoint(love.mouse.getPosition())
+    love.graphics.circle("line", worldX, worldY, 1 / 16, 16)
+end
+
+function Camera:getWorldPoint(screenX, screenY)
+    local width, height = love.graphics.getDimensions()
+    local scale = self.scale * height
+
+    local worldX, worldY = screenX - 0.5 * width, screenY - 0.5 * height
+    return self.x + worldX / scale, self.y + worldY / scale
 end
 
 return Camera

@@ -27,7 +27,11 @@ function Player:updateInput(dt)
     self.ship.inputs.turn = rightInput - leftInput
 
     self.ship.inputs.thrust = love.keyboard.isDown("w") and 1 or 0
-    self.ship.inputs.fire = love.keyboard.isDown("j") and 1 or 0
+    self.ship.inputs.fire1 = love.keyboard.isDown("space") and 1 or 0
+
+    self.ship.inputs.targetX, self.ship.inputs.targetY = self.camera:getWorldPoint(love.mouse.getPosition())
+    self.ship.inputs.fire2 = love.mouse.isDown(1) and 1 or 0
+    self.ship.inputs.fire3 = love.mouse.isDown(1) and 1 or 0
 end
 
 function Player:updateAnimation(dt)

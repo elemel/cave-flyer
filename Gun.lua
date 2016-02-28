@@ -1,4 +1,5 @@
 local Bullet = require "Bullet"
+local common = require "common"
 
 local Gun = {}
 Gun.__index = Gun
@@ -29,7 +30,7 @@ end
 function Gun:updateControl(dt)
     self.currentDelay = self.currentDelay + dt
 
-    if self.ship.inputs.fire * self.currentDelay > self.delay then
+    if self.ship.inputs.fire1 * self.currentDelay > self.delay then
         local x, y = self.body:getWorldCenter()
         local linearVelocityX, linearVelocityY =
             self.body:getLinearVelocityFromWorldPoint(x, y)

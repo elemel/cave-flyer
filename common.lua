@@ -1,5 +1,10 @@
 local common = {}
 
+function common.normalize2(x, y)
+    local length = math.sqrt(x * x + y * y)
+    return x / length, y / length, length
+end
+
 function common.get2(t, x, y)
     return t[x] and t[x][y]
 end
