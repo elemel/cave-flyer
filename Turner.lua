@@ -38,11 +38,14 @@ function Turner:updateControl(dt)
 end
 
 function Turner:updateJoint()
+    local linearVelocityX, linearVelocityY = 0, 0
+
     if self.joint then
         self.joint:destroy()
     end
 
     if self.fixedBody then
+        linearVelocityX, linearVelocityY = self.fixedBody:getLinearVelocity()
         self.fixedBody:destroy()
     end
 
@@ -53,6 +56,7 @@ function Turner:updateJoint()
     self.fixedBody = love.physics.newBody(physics.world, x, y, "dynamic")
     self.fixedBody:setFixedRotation(true)
     self.fixedBody:setMass(self.mass)
+    self.fixedBody:setLinearVelocity(linearVelocityX, linearVelocityY)
 
     self.joint = love.physics.newRevoluteJoint(self.fixedBody, self.body, x, y)
     self.joint:setMotorEnabled(true)
