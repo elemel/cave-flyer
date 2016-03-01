@@ -15,6 +15,7 @@ function Turner:init(args)
     self.speed = args.speed or 1
     self.mass = args.mass or 1 / 64
 
+    self:updateJoint()
     self.game.updateHandlers.control[self] = Turner.updateControl
 end
 

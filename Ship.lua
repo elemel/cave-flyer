@@ -34,9 +34,16 @@ function Ship:init(args)
         bodyType = "dynamic",
         groupIndex = self.groupIndex,
         category = "ship",
+        originX = 1 / 16, originY = 1 / 16,
     })
 
     self.wall.body:setUserData({ship = self})
+
+    self.wall:setBlock(0, 0, "metal")
+    self.wall:setBlock(1, 0, "metal")
+    self.wall:setBlock(0, -1, "metal")
+    self.wall:setBlock(0, 1, "metal")
+    self.wall:updateBlockFixtures()
 
     self.turner = Turner.new({
         game = self.game,
@@ -51,14 +58,12 @@ function Ship:init(args)
         ship = self,
         body = self.wall.body,
         acceleration = args.thrustAcceleration or 4,
-        angle = math.atan2(-1, 1),
     })
 
     self.gun = Gun.new({
         game = self.game,
         ship = self,
         body = self.wall.body,
-        angle = math.atan2(-1, 1),
         speed = 4,
         delay = 1 / 4,
         groupIndex = self.groupIndex,

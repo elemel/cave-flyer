@@ -65,12 +65,6 @@ function love.load()
         groupIndex = -physics:generateGroupIndex(),
     })
 
-    ship.wall:setBlock(0, 0, "metal")
-    ship.wall:setBlock(-1, 0, "metal")
-    ship.wall:setBlock(0, 1, "metal")
-    ship.wall:updateBlockFixtures()
-    ship.turner:updateJoint()
-
     Player.new({
         game = game,
         ship = ship,
@@ -82,12 +76,6 @@ function love.load()
         x = 1, y = 1,
         groupIndex = -physics:generateGroupIndex(),
     })
-
-    enemyShip.wall:setBlock(0, 0, "metal")
-    enemyShip.wall:setBlock(-1, 0, "metal")
-    enemyShip.wall:setBlock(0, 1, "metal")
-    enemyShip.wall:updateBlockFixtures()
-    enemyShip.turner:updateJoint()
 
     Ai.new({
         game = game,

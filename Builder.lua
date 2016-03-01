@@ -40,7 +40,7 @@ function Builder:updateControl(dt)
 end
 
 function Builder:debugDraw()
-    local x, y = self.body:getWorldCenter()
+    local x, y = self.body:getPosition()
     local targetX, targetY = self.ship.inputs.targetX, self.ship.inputs.targetY
 	love.graphics.line(x, y, targetX, targetY)
 end

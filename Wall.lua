@@ -87,8 +87,8 @@ end
 function Wall:getIndicesFromWorldPoint(worldX, worldY)
     local localX, localY = self.body:getLocalPoint(worldX, worldY)
 
-    local x = math.floor((localX - self.originX) / self.blockWidth)
-    local y = math.floor((localY - self.originY) / self.blockHeight)
+    local x = math.floor((localX + self.originX) / self.blockWidth)
+    local y = math.floor((localY + self.originY) / self.blockHeight)
 
     return x, y
 end

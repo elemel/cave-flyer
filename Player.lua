@@ -36,7 +36,7 @@ end
 
 function Player:updateAnimation(dt)
 	if not self.ship.destroyed then
-	    self.camera.x, self.camera.y = self.ship.wall.body:getWorldCenter()
+	    self.camera.x, self.camera.y = self.ship.wall.body:getPosition()
 	end
 end
 
