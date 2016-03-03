@@ -44,7 +44,12 @@ end
 function Wall:setBlock(x, y, block)
     if block ~= self:getBlock(x, y) then
         common.set2(self.blocks, x, y, block)
-        common.set2(self.dirtyBlockFixtures, x, y, true)
+
+        for dirtyX = x - 1, x + 1 do
+            for dirtyY = y - 1, y + 1 do
+                common.set2(self.dirtyBlockFixtures, dirtyX, dirtyY, true)
+            end
+        end
     end
 end
 
@@ -70,15 +75,28 @@ function Wall:updateBlockFixture(x, y)
     end
 
     if block then
-        local blockX = (x + 0.5) * self.blockWidth - self.originX
-        local blockY = (y + 0.5) * self.blockHeight - self.originY
-        local shape = love.physics.newRectangleShape(blockX, blockY,
-            self.blockWidth, self.blockHeight)
+        local neighbor1 = common.get2(self.blocks, x - 1, y - 1)
+        local neighbor2 = common.get2(self.blocks, x, y - 1)
+        local neighbor3 = common.get2(self.blocks, x + 1, y - 1)
+        local neighbor4 = common.get2(self.blocks, x - 1, y)
 
-        fixture = love.physics.newFixture(self.body, shape, 1)
-        fixture:setGroupIndex(self.groupIndex)
-        fixture:setCategory(self.categoryIndex)
-        fixture:setUserData({x = x, y = y})
+        local neighbor6 = common.get2(self.blocks, x + 1, y)
+        local neighbor7 = common.get2(self.blocks, x - 1, y + 1)
+        local neighbor8 = common.get2(self.blocks, x, y + 1)
+        local neighbor9 = common.get2(self.blocks, x + 1, y + 1)
+
+        if not (neighbor1 and neighbor2 and neighbor3 and neighbor4 and
+                neighbor6 and neighbor7 and neighbor8 and neighbor9) then
+            local blockX = (x + 0.5) * self.blockWidth - self.originX
+            local blockY = (y + 0.5) * self.blockHeight - self.originY
+            local shape = love.physics.newRectangleShape(blockX, blockY,
+                self.blockWidth, self.blockHeight)
+
+            fixture = love.physics.newFixture(self.body, shape, 1)
+            fixture:setGroupIndex(self.groupIndex)
+            fixture:setCategory(self.categoryIndex)
+            fixture:setUserData({x = x, y = y})
+        end
     end
 
     common.set2(self.blockFixtures, x, y, fixture)

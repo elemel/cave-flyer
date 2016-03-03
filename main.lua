@@ -28,7 +28,7 @@ function love.load()
 
     local camera = Camera.new({
         game = game,
-        scale = 1 / 8,
+        scale = 1 / 32,
     })
 
     local physics = Physics.new({
@@ -47,13 +47,19 @@ function love.load()
 
     local z = 1000 * love.math.random()
     local terrainFrequency = 0.05
+    local radius = 100
 
-    for x = -20, 20 do
-        for y = -20, 20 do
-            local density = common.fbm3(terrainFrequency * x, terrainFrequency * y, z)
+    for x = -radius, radius - 1 do
+        for y = -radius, radius - 1 do
+            local distance = common.length2(x + 0.5, y + 0.5)
 
-            if density > 0.5 then
-                terrain.wall:setBlock(x, y, "stone")
+            if distance < radius then
+                local density = common.fbm3(terrainFrequency * (x + 0.5), terrainFrequency * (y + 0.5), z)
+                local threshold = 0.75 - 0.25 * common.smoothstep(radius / 3, 2 * radius / 3, distance)
+
+                if density < threshold then
+                    terrain.wall:setBlock(x, y, "stone")
+                end
             end
         end
     end
@@ -62,6 +68,7 @@ function love.load()
 
     local ship = Ship.new({
         game = game,
+        x = 10, y = 10,
         groupIndex = -physics:generateGroupIndex(),
     })
 
@@ -73,7 +80,7 @@ function love.load()
 
     local enemyShip = Ship.new({
         game = game,
-        x = 1, y = 1,
+        x = 11, y = 11,
         groupIndex = -physics:generateGroupIndex(),
     })
 

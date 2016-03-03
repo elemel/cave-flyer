@@ -1,8 +1,21 @@
 local common = {}
 
+function common.clamp(x, x1, x2)
+    return math.min(math.max(x, x1), x2)
+end
+
+function common.length2(x, y)
+    return math.sqrt(x * x + y * y)
+end
+
 function common.normalize2(x, y)
-    local length = math.sqrt(x * x + y * y)
+    local length = common.length2(x, y)
     return x / length, y / length, length
+end
+
+function common.smoothstep(x1, x2, x)
+    local t = common.clamp((x - x1) / (x2 - x1), 0, 1) 
+    return t * t * (3 - 2 * t)
 end
 
 function common.get2(t, x, y)
