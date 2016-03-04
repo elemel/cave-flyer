@@ -15,7 +15,7 @@ function TractorBeam:init(args)
     self.body = args.body
 
     self.game.updateHandlers.control[self] = TractorBeam.updateControl
-    self.game.drawHandlers.debug[self] = TractorBeam.debugDraw
+    -- self.game.drawHandlers.debug[self] = TractorBeam.debugDraw
 end
 
 function TractorBeam:destroy()

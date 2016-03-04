@@ -1,3 +1,5 @@
+local common = require "common"
+
 local Player = {}
 Player.__index = Player
 
@@ -37,6 +39,8 @@ end
 function Player:updateAnimation(dt)
 	if not self.ship.destroyed then
 	    self.camera.x, self.camera.y = self.ship.wall.body:getPosition()
+	    local distance = common.length2(self.ship.wall.body:getPosition())
+	    self.camera.scale = 0.5 / distance
 	end
 end
 

@@ -15,7 +15,7 @@ function Builder:init(args)
 	self.body = args.body
 
     self.game.updateHandlers.control[self] = Builder.updateControl
-    self.game.drawHandlers.debug[self] = Builder.debugDraw
+    -- self.game.drawHandlers.debug[self] = Builder.debugDraw
 end
 
 function Builder:destroy()
