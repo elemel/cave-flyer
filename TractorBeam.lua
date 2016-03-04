@@ -14,7 +14,7 @@ function TractorBeam:init(args)
     self.ship = args.ship
     self.body = args.body
 
-    self.game.updateHandlers.control[self] = TractorBeam.updateControl
+    -- self.game.updateHandlers.control[self] = TractorBeam.updateControl
     -- self.game.drawHandlers.debug[self] = TractorBeam.debugDraw
 end
 
