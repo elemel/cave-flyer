@@ -4,6 +4,10 @@ function common.clamp(x, x1, x2)
     return math.min(math.max(x, x1), x2)
 end
 
+function common.mix(x1, x2, t)
+    return (1 - t) * x1 + t * x2
+end
+
 function common.length2(x, y)
     return math.sqrt(x * x + y * y)
 end

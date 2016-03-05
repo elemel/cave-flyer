@@ -38,9 +38,13 @@ end
 
 function Player:updateAnimation(dt)
 	if not self.ship.destroyed then
-	    self.camera.x, self.camera.y = self.ship.wall.body:getPosition()
-	    local distance = common.length2(self.ship.wall.body:getPosition())
-	    self.camera.scale = 0.5 / distance
+		local x, y = self.ship.wall.body:getWorldCenter()
+	    self.camera.x, self.camera.y = x, y
+
+	    local centerDistance = common.length2(x, y)
+	    local surfaceDistance = centerDistance - 128 / 8
+	    local t = common.smoothstep(0, 128 / 8, surfaceDistance)
+	    self.camera.scale = common.mix(1 / 16, 0.25 / surfaceDistance, t)
 	end
 end
 
