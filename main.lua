@@ -16,13 +16,14 @@ function love.load()
         fullscreentype = "desktop",
         resizable = true,
         msaa = 16,
+        highdpi = true,
     })
 
     love.physics.setMeter(1)
 
     game = Game.new({
         updatePhases = {"input", "control", "physics", "collision", "animation"},
-        drawPhases = {"camera", "debug"},
+        drawPhases = {"camera", "wall", "debug"},
         tags = {"camera", "physics", "terrain"},
     })
 
@@ -47,7 +48,7 @@ function love.load()
 
     local z = 1000 * love.math.random()
     local terrainFrequency = 0.05
-    local radius = 128
+    local radius = 512
 
     for x = -radius, radius - 1 do
         for y = -radius, radius - 1 do
@@ -64,11 +65,11 @@ function love.load()
         end
     end
 
-    terrain.wall:updateBlockFixtures()
+    terrain.wall:updateBlocks()
 
     local ship = Ship.new({
         game = game,
-        x = 16, y = 16,
+        x = 64, y = 64,
         groupIndex = -physics:generateGroupIndex(),
     })
 
@@ -80,7 +81,7 @@ function love.load()
 
     local enemyShip = Ship.new({
         game = game,
-        x = 17, y = 17,
+        x = 65, y = 65,
         groupIndex = -physics:generateGroupIndex(),
     })
 

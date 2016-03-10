@@ -52,7 +52,7 @@ function TractorBeam:updateControl(dt)
             local y = fixture:getUserData().y
 
             -- terrain.wall:setBlock(x, y, nil)
-            terrain.wall:updateBlockFixtures()
+            terrain.wall:updateBlocks()
         end
 
         self.currentDelay = 0

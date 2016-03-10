@@ -63,7 +63,7 @@ function Collider:collideBulletAndTerrain(bulletFixture, terrainFixture)
             bullet:destroy()
 
             terrain.wall:setBlock(x, y, nil)
-            terrain.wall:updateBlockFixtures()
+            terrain.wall:updateBlocks()
         end
     end
 

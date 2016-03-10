@@ -27,14 +27,14 @@ function Builder:updateControl(dt)
     if self.ship.inputs.fire2 > 0.5 then
         local x, y = self.ship.wall:getIndicesFromWorldPoint(self.ship.inputs.targetX, self.ship.inputs.targetY)
         self.ship.wall:setBlock(x, y, "metal")
-        self.ship.wall:updateBlockFixtures()
+        self.ship.wall:updateBlocks()
         self.ship.turner:updateJoint()
     end
 
     if self.ship.inputs.fire3 > 0.5 then
         local x, y = self.ship.wall:getIndicesFromWorldPoint(self.ship.inputs.targetX, self.ship.inputs.targetY)
         self.ship.wall:setBlock(x, y, nil)
-        self.ship.wall:updateBlockFixtures()
+        self.ship.wall:updateBlocks()
         self.ship.turner:updateJoint()
     end
 end
