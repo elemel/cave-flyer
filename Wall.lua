@@ -108,7 +108,6 @@ function Wall:updateBlocks()
 end
 
 function Wall:updateBlockFixture(x, y)
-    local block = common.get2(self.blocks, x, y)
     local fixture = common.get2(self.blockFixtures, x, y)
 
     if fixture then
@@ -116,29 +115,61 @@ function Wall:updateBlockFixture(x, y)
         fixture = nil
     end
 
-    if block then
-        local neighbor1 = common.get2(self.blocks, x - 1, y - 1)
-        local neighbor2 = common.get2(self.blocks, x, y - 1)
-        local neighbor3 = common.get2(self.blocks, x + 1, y - 1)
-        local neighbor4 = common.get2(self.blocks, x - 1, y)
+    local block1 = common.get2(self.blocks, x - 1, y - 1)
+    local block2 = common.get2(self.blocks, x, y - 1)
+    local block3 = common.get2(self.blocks, x + 1, y - 1)
 
-        local neighbor6 = common.get2(self.blocks, x + 1, y)
-        local neighbor7 = common.get2(self.blocks, x - 1, y + 1)
-        local neighbor8 = common.get2(self.blocks, x, y + 1)
-        local neighbor9 = common.get2(self.blocks, x + 1, y + 1)
+    local block4 = common.get2(self.blocks, x - 1, y)
+    local block5 = common.get2(self.blocks, x, y)
+    local block6 = common.get2(self.blocks, x + 1, y)
 
-        if not (neighbor1 and neighbor2 and neighbor3 and neighbor4 and
-                neighbor6 and neighbor7 and neighbor8 and neighbor9) then
-            local blockX = (x + 0.5) * self.blockWidth
-            local blockY = (y + 0.5) * self.blockHeight
-            local shape = love.physics.newRectangleShape(blockX, blockY,
-                self.blockWidth, self.blockHeight)
+    local block7 = common.get2(self.blocks, x - 1, y + 1)
+    local block8 = common.get2(self.blocks, x, y + 1)
+    local block9 = common.get2(self.blocks, x + 1, y + 1)
 
-            fixture = love.physics.newFixture(self.body, shape, 1)
-            fixture:setGroupIndex(self.groupIndex)
-            fixture:setCategory(self.categoryIndex)
-            fixture:setUserData({x = x, y = y})
+    local x1, y1 = x * self.blockWidth, y * self.blockHeight
+    local x2, y2 = (x + 0.5) * self.blockWidth, (y + 0.5) * self.blockHeight
+    local x3, y3 = (x + 1) * self.blockWidth, (y + 1) * self.blockHeight
+
+    if block5 then
+        if not (block1 and block2 and block3 and block4 and block6 and block7 and block8 and block9) then
+            if not block1 and not block2 and not block4 and block6 and block8 then
+                local shape = love.physics.newPolygonShape(x2, y1, x3, y1, x1, y3, x3, y3, x1, y2)
+                fixture = love.physics.newFixture(self.body, shape, 1)
+            elseif not block2 and not block3 and not block6 and block4 and block8 then
+                local shape = love.physics.newPolygonShape(x1, y1, x2, y1, x3, y2, x3, y3, x1, y3)
+                fixture = love.physics.newFixture(self.body, shape, 1)
+            elseif not block4 and not block7 and not block8 and block2 and block6 then
+                local shape = love.physics.newPolygonShape(x1, y1, x3, y1, x3, y3, x2, y3, x1, y2)
+                fixture = love.physics.newFixture(self.body, shape, 1)
+            elseif not block6 and not block8 and not block9 and block2 and block4 then
+                local shape = love.physics.newPolygonShape(x1, y1, x3, y1, x3, y2, x2, y3, x1, y3)
+                fixture = love.physics.newFixture(self.body, shape, 1)
+            else
+                local shape = love.physics.newRectangleShape(x2, y2, self.blockWidth, self.blockHeight)
+                fixture = love.physics.newFixture(self.body, shape, 1)
+            end
         end
+    else
+        if not block1 and not block2 and not block4 and block6 and block8 then
+            local shape = love.physics.newPolygonShape(x3, y2, x3, y3, x2, y3)
+            fixture = love.physics.newFixture(self.body, shape, 1)
+        elseif not block2 and not block3 and not block6 and block4 and block8 then
+            local shape = love.physics.newPolygonShape(x1, y2, x2, y3, x1, y3)
+            fixture = love.physics.newFixture(self.body, shape, 1)
+        elseif not block4 and not block7 and not block8 and block2 and block6 then
+            local shape = love.physics.newPolygonShape(x2, y1, x3, y1, x3, y2)
+            fixture = love.physics.newFixture(self.body, shape, 1)
+        elseif not block6 and not block8 and not block9 and block2 and block4 then
+            local shape = love.physics.newPolygonShape(x1, y1, x2, y1, x1, y2)
+            fixture = love.physics.newFixture(self.body, shape, 1)
+        end
+    end
+
+    if fixture then
+        fixture:setGroupIndex(self.groupIndex)
+        fixture:setCategory(self.categoryIndex)
+        fixture:setUserData({x = x, y = y})
     end
 
     common.set2(self.blockFixtures, x, y, fixture)

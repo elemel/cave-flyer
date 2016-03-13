@@ -48,7 +48,7 @@ function love.load()
 
     local z = 1000 * love.math.random()
     local terrainFrequency = 0.05
-    local radius = 512
+    local radius = 170
 
     for x = -radius, radius - 1 do
         for y = -radius, radius - 1 do
@@ -69,7 +69,7 @@ function love.load()
 
     local ship = Ship.new({
         game = game,
-        x = 64, y = 64,
+        x = 16, y = 16,
         groupIndex = -physics:generateGroupIndex(),
     })
 
@@ -81,7 +81,7 @@ function love.load()
 
     local enemyShip = Ship.new({
         game = game,
-        x = 65, y = 65,
+        x = 17, y = 17,
         groupIndex = -physics:generateGroupIndex(),
     })
 
