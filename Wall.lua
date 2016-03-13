@@ -187,8 +187,8 @@ function Wall:updateCanvas()
         local pixelX2 = canvasWidth - self.canvasOriginX - 1
         local pixelY2 = canvasHeight - self.canvasOriginY - 1
 
-        if self.blockX1 < pixelX1 or self.blockY1 < pixelY1 or
-                self.blockX2 > pixelX2 or self.blockY2 > pixelY2 then
+        if 3 * self.blockX1 < pixelX1 or 3 * self.blockY1 < pixelY1 or
+                3 * self.blockX2 > pixelX2 or 3 * self.blockY2 > pixelY2 then
             oldCanvas = self.canvas
 
             oldCanvasOriginX = self.canvasOriginX
@@ -199,14 +199,14 @@ function Wall:updateCanvas()
     end
 
     if not self.canvas then
-        local canvasWidth = self.blockX2 - self.blockX1 + 1
-        local canvasHeight = self.blockY2 - self.blockY1 + 1
+        local canvasWidth = 3 * (self.blockX2 - self.blockX1 + 1)
+        local canvasHeight = 3 * (self.blockY2 - self.blockY1 + 1)
 
         self.canvas = love.graphics.newCanvas(canvasWidth, canvasHeight)
         self.canvas:setFilter("nearest")
 
-        self.canvasOriginX = -self.blockX1
-        self.canvasOriginY = -self.blockY1
+        self.canvasOriginX = -3 * self.blockX1
+        self.canvasOriginY = -3 * self.blockY1
     end
 
     if self.canvas then
@@ -225,17 +225,30 @@ function Wall:updateCanvas()
         for x, column in pairs(self.dirtyBlocks) do
             for y, _ in pairs(column) do
                 local block = common.get2(self.blocks, x, y)
+                local fixture = common.get2(self.blockFixtures, x, y)
 
-                if block then
-                    love.graphics.setColor(0xff, 0xff, 0xff, 0xff)
-                else
+                local canvasX = 3 * x + self.canvasOriginX
+                local canvasY = 3 * y + self.canvasOriginY
+
+                if fixture then
                     love.graphics.setColor(0x00, 0x00, 0x00, 0x00)
+                    love.graphics.rectangle("fill", canvasX, canvasY, 3, 3)
+
+                    love.graphics.setColor(0xff, 0xff, 0xff, 0xff)
+                    love.graphics.push()
+                    love.graphics.translate(self.canvasOriginX, self.canvasOriginY)
+                    love.graphics.scale(24)
+                    love.graphics.polygon("fill", fixture:getShape():getPoints())
+                    love.graphics.pop()
+                else
+                    if block then
+                        love.graphics.setColor(0xff, 0xff, 0xff, 0xff)
+                    else
+                        love.graphics.setColor(0x00, 0x00, 0x00, 0x00)
+                    end
+
+                    love.graphics.rectangle("fill", canvasX, canvasY, 3, 3)
                 end
-
-                local canvasX = x + self.canvasOriginX
-                local canvasY = y + self.canvasOriginY
-
-                love.graphics.rectangle("fill", canvasX, canvasY, 1, 1)
             end
         end
 
@@ -258,7 +271,7 @@ function Wall:draw()
     if self.canvas then
         local x, y = self.body:getPosition()
         local angle = self.body:getAngle()
-        local scale = 1 / 8
+        local scale = 1 / 24
 
         love.graphics.draw(self.canvas, x, y, angle, scale, scale,
             self.canvasOriginX, self.canvasOriginY)

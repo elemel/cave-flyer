@@ -15,7 +15,7 @@ function love.load()
         -- fullscreen = true,
         fullscreentype = "desktop",
         resizable = true,
-        msaa = 16,
+        -- msaa = 16,
         highdpi = true,
     })
 

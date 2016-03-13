@@ -25,7 +25,7 @@ function Physics:init(args)
     self.ground = love.physics.newBody(self.world)
 
     self.game.updateHandlers.physics[self] = Physics.update
-    self.game.drawHandlers.debug[self] = Physics.debugDraw
+    -- self.game.drawHandlers.debug[self] = Physics.debugDraw
     self.game:register(self, self.tags)
 end
 
