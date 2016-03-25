@@ -29,7 +29,7 @@ function love.load()
 
     local camera = Camera.new({
         game = game,
-        scale = 1 / 32,
+        scale = 1 / 24,
     })
 
     local physics = Physics.new({

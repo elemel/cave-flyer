@@ -12,7 +12,13 @@ end
 function Wall:init(args)
     self.game = args.game
     self.blocks = {}
-    self.blockFixtures = {}
+
+    self.blockFixtures1 = {}
+    self.blockFixtures3 = {}
+    self.blockFixtures5 = {}
+    self.blockFixtures7 = {}
+    self.blockFixtures9 = {}
+
     self.dirtyBlocks = {}
     self.groupIndex = args.groupIndex or 0
 
@@ -108,11 +114,35 @@ function Wall:updateBlocks()
 end
 
 function Wall:updateBlockFixture(x, y)
-    local fixture = common.get2(self.blockFixtures, x, y)
+    local fixture1 = common.get2(self.blockFixtures1, x, y)
+    local fixture3 = common.get2(self.blockFixtures3, x, y)
+    local fixture5 = common.get2(self.blockFixtures5, x, y)
+    local fixture7 = common.get2(self.blockFixtures7, x, y)
+    local fixture9 = common.get2(self.blockFixtures9, x, y)
 
-    if fixture then
-        fixture:destroy()
-        fixture = nil
+    if fixture1 then
+        fixture1:destroy()
+        fixture1 = nil
+    end
+
+    if fixture3 then
+        fixture3:destroy()
+        fixture3 = nil
+    end
+
+    if fixture5 then
+        fixture5:destroy()
+        fixture5 = nil
+    end
+
+    if fixture7 then
+        fixture7:destroy()
+        fixture7 = nil
+    end
+
+    if fixture9 then
+        fixture9:destroy()
+        fixture9 = nil
     end
 
     local block1 = common.get2(self.blocks, x - 1, y - 1)
@@ -131,48 +161,68 @@ function Wall:updateBlockFixture(x, y)
     local x2, y2 = (x + 0.5) * self.blockWidth, (y + 0.5) * self.blockHeight
     local x3, y3 = (x + 1) * self.blockWidth, (y + 1) * self.blockHeight
 
-    if block5 then
-        if not (block1 and block2 and block3 and block4 and block6 and block7 and block8 and block9) then
-            if not block1 and not block2 and not block4 and block6 and block8 then
-                local shape = love.physics.newPolygonShape(x2, y1, x3, y1, x1, y3, x3, y3, x1, y2)
-                fixture = love.physics.newFixture(self.body, shape, 1)
-            elseif not block2 and not block3 and not block6 and block4 and block8 then
-                local shape = love.physics.newPolygonShape(x1, y1, x2, y1, x3, y2, x3, y3, x1, y3)
-                fixture = love.physics.newFixture(self.body, shape, 1)
-            elseif not block4 and not block7 and not block8 and block2 and block6 then
-                local shape = love.physics.newPolygonShape(x1, y1, x3, y1, x3, y3, x2, y3, x1, y2)
-                fixture = love.physics.newFixture(self.body, shape, 1)
-            elseif not block6 and not block8 and not block9 and block2 and block4 then
-                local shape = love.physics.newPolygonShape(x1, y1, x3, y1, x3, y2, x2, y3, x1, y3)
-                fixture = love.physics.newFixture(self.body, shape, 1)
-            else
-                local shape = love.physics.newRectangleShape(x2, y2, self.blockWidth, self.blockHeight)
-                fixture = love.physics.newFixture(self.body, shape, 1)
-            end
+    if not (block1 and block2 and block3 and block4 and block6 and block7 and block8 and block9) then
+        if block5 then
+            local shape = love.physics.newPolygonShape(x1, y2, x2, y3, x3, y2, x2, y1)
+            fixture5 = love.physics.newFixture(self.body, shape, 1)
         end
-    else
-        if not block1 and not block2 and not block4 and block6 and block8 then
-            local shape = love.physics.newPolygonShape(x3, y2, x3, y3, x2, y3)
-            fixture = love.physics.newFixture(self.body, shape, 1)
-        elseif not block2 and not block3 and not block6 and block4 and block8 then
-            local shape = love.physics.newPolygonShape(x1, y2, x2, y3, x1, y3)
-            fixture = love.physics.newFixture(self.body, shape, 1)
-        elseif not block4 and not block7 and not block8 and block2 and block6 then
-            local shape = love.physics.newPolygonShape(x2, y1, x3, y1, x3, y2)
-            fixture = love.physics.newFixture(self.body, shape, 1)
-        elseif not block6 and not block8 and not block9 and block2 and block4 then
+
+        if block2 and block4 or block5 and (block1 or block2 or block4) then
             local shape = love.physics.newPolygonShape(x1, y1, x2, y1, x1, y2)
-            fixture = love.physics.newFixture(self.body, shape, 1)
+            fixture1 = love.physics.newFixture(self.body, shape, 1)
+        end
+
+        if block2 and block6 or block5 and (block2 or block3 or block6) then
+            local shape = love.physics.newPolygonShape(x3, y1, x3, y2, x2, y1)
+            fixture3 = love.physics.newFixture(self.body, shape, 1)
+        end
+
+        if block4 and block8 or block5 and (block4 or block7 or block8) then
+            local shape = love.physics.newPolygonShape(x1, y3, x1, y2, x2, y3)
+            fixture7 = love.physics.newFixture(self.body, shape, 1)
+        end
+
+        if block6 and block8 or block5 and (block6 or block8 or block9) then
+            local shape = love.physics.newPolygonShape(x3, y3, x2, y3, x3, y2)
+            fixture9 = love.physics.newFixture(self.body, shape, 1)
         end
     end
 
-    if fixture then
-        fixture:setGroupIndex(self.groupIndex)
-        fixture:setCategory(self.categoryIndex)
-        fixture:setUserData({x = x, y = y})
+    if fixture1 then
+        fixture1:setGroupIndex(self.groupIndex)
+        fixture1:setCategory(self.categoryIndex)
+        fixture1:setUserData({x = x, y = y})
     end
 
-    common.set2(self.blockFixtures, x, y, fixture)
+    if fixture3 then
+        fixture3:setGroupIndex(self.groupIndex)
+        fixture3:setCategory(self.categoryIndex)
+        fixture3:setUserData({x = x, y = y})
+    end
+
+    if fixture5 then
+        fixture5:setGroupIndex(self.groupIndex)
+        fixture5:setCategory(self.categoryIndex)
+        fixture5:setUserData({x = x, y = y})
+    end
+
+    if fixture7 then
+        fixture7:setGroupIndex(self.groupIndex)
+        fixture7:setCategory(self.categoryIndex)
+        fixture7:setUserData({x = x, y = y})
+    end
+
+    if fixture9 then
+        fixture9:setGroupIndex(self.groupIndex)
+        fixture9:setCategory(self.categoryIndex)
+        fixture9:setUserData({x = x, y = y})
+    end
+
+    common.set2(self.blockFixtures1, x, y, fixture1)
+    common.set2(self.blockFixtures3, x, y, fixture3)
+    common.set2(self.blockFixtures5, x, y, fixture5)
+    common.set2(self.blockFixtures7, x, y, fixture7)
+    common.set2(self.blockFixtures9, x, y, fixture9)
 end
 
 function Wall:updateCanvas()
@@ -224,30 +274,36 @@ function Wall:updateCanvas()
 
         for x, column in pairs(self.dirtyBlocks) do
             for y, _ in pairs(column) do
-                local block = common.get2(self.blocks, x, y)
-                local fixture = common.get2(self.blockFixtures, x, y)
-
                 local canvasX = 3 * x + self.canvasOriginX
                 local canvasY = 3 * y + self.canvasOriginY
 
-                if fixture then
-                    love.graphics.setColor(0x00, 0x00, 0x00, 0x00)
+                love.graphics.setColor(0x00, 0x00, 0x00, 0x00)
+                love.graphics.rectangle("fill", canvasX, canvasY, 3, 3)
+
+                local block = common.get2(self.blocks, x, y)
+                local fixture5 = common.get2(self.blockFixtures5, x, y)
+
+                if block and not fixture5 then
+                    love.graphics.setColor(0xff, 0xff, 0xff, 0xff)
                     love.graphics.rectangle("fill", canvasX, canvasY, 3, 3)
+                else
+                    local fixture1 = common.get2(self.blockFixtures1, x, y)
+                    local fixture3 = common.get2(self.blockFixtures3, x, y)
+                    local fixture7 = common.get2(self.blockFixtures7, x, y)
+                    local fixture9 = common.get2(self.blockFixtures9, x, y)
 
                     love.graphics.setColor(0xff, 0xff, 0xff, 0xff)
                     love.graphics.push()
                     love.graphics.translate(self.canvasOriginX, self.canvasOriginY)
                     love.graphics.scale(24)
-                    love.graphics.polygon("fill", fixture:getShape():getPoints())
-                    love.graphics.pop()
-                else
-                    if block then
-                        love.graphics.setColor(0xff, 0xff, 0xff, 0xff)
-                    else
-                        love.graphics.setColor(0x00, 0x00, 0x00, 0x00)
+
+                    for i, fixture in pairs({fixture1, fixture3, fixture5, fixture7, fixture9}) do
+                        if fixture then
+                            love.graphics.polygon("fill", fixture:getShape():getPoints())
+                        end
                     end
 
-                    love.graphics.rectangle("fill", canvasX, canvasY, 3, 3)
+                    love.graphics.pop()
                 end
             end
         end
