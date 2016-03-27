@@ -9,7 +9,7 @@ local Ship = require "Ship"
 local Terrain = require "Terrain"
 
 function love.load()
-    love.window.setTitle("Cave Flyer")
+    love.window.setTitle("Gravitas II: Adamas")
 
     love.window.setMode(800, 600, {
         -- fullscreen = true,
