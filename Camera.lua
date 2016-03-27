@@ -1,3 +1,5 @@
+local common = require "common"
+
 local Camera = {}
 Camera.__index = Camera
 
@@ -12,6 +14,7 @@ function Camera:init(args)
     self.tags = args.tags or {"camera"}
 
     self.x, self.y = args.x or 0, args.y or 0
+    self.angle = 0
     self.scale = args.scale or 1
 
     self.game.drawHandlers.camera[self] = Camera.draw
@@ -29,6 +32,7 @@ function Camera:draw()
 
     love.graphics.translate(0.5 * width, 0.5 * height)
     love.graphics.scale(scale)
+    love.graphics.rotate(-self.angle)
     love.graphics.translate(-self.x, -self.y)
     love.graphics.setLineWidth(1 / scale)
 
@@ -41,6 +45,7 @@ function Camera:getWorldPoint(screenX, screenY)
     local scale = self.scale * height
 
     local worldX, worldY = screenX - 0.5 * width, screenY - 0.5 * height
+    worldX, worldY = common.rotate2(worldX, worldY, self.angle)
     return self.x + worldX / scale, self.y + worldY / scale
 end
 

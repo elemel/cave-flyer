@@ -17,6 +17,13 @@ function common.normalize2(x, y)
     return x / length, y / length, length
 end
 
+function common.rotate2(x, y, angle)
+    local cosAngle = math.cos(angle)
+    local sinAngle = math.sin(angle)
+
+    return cosAngle * x - sinAngle * y, sinAngle * x + cosAngle * y
+end
+
 function common.smoothstep(x1, x2, x)
     local t = common.clamp((x - x1) / (x2 - x1), 0, 1) 
     return t * t * (3 - 2 * t)

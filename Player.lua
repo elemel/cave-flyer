@@ -44,7 +44,8 @@ function Player:updateAnimation(dt)
 	    local centerDistance = common.length2(x, y)
 	    local surfaceDistance = centerDistance - 170 / 8
 	    local t = common.smoothstep(0, 128 / 8, surfaceDistance)
-	    self.camera.scale = common.mix(1 / 16, 0.25 / surfaceDistance, t)
+	    self.camera.scale = common.mix(1 / 12, 0.25 / surfaceDistance, t)
+	    self.camera.angle = self.ship.wall.body:getAngle() + 0.5 * math.pi
 	end
 end
 
